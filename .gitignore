@@ -1,0 +1,43 @@
+```gitignore id="7f9g9t"
+# =========================================
+# Windows
+# =========================================
+Thumbs.db
+Desktop.ini
+
+# =========================================
+# VSCode / IDEs
+# =========================================
+.vscode/
+.idea/
+
+# =========================================
+# Altium Designer
+# =========================================
+
+# Temporary / cache folders
+**/History/
+**/__Previews/
+**/Project Logs for*/
+**/Project Outputs*/
+**/Generated/
+**/Logs/
+
+# Temporary files
+**/*.bak
+**/*.tmp
+**/*.Old
+
+# User-specific files
+**/*.DsnWrk
+**/*.Workspace
+**/*.PrjPcbStructure
+**/*.local
+**/*.user
+
+# =========================================
+# Python
+# =========================================
+__pycache__/
+*.pyc
+```
