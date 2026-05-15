@@ -186,10 +186,14 @@ GenerateClassCluster=0
 DocumentUniqueId=GQJTKSRA
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for signal-generator\signal-generator.nsx
+DocumentPath=Project Outputs for signal-generator\Design Rule Check - Signal_Generator.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
+DocumentPath=Project Outputs for signal-generator\signal-generator.nsx
+DItemRevisionGUID=
+
+[GeneratedDocument3]
 DocumentPath=Simulation\signal-generator.sdf
 DItemRevisionGUID=
 
