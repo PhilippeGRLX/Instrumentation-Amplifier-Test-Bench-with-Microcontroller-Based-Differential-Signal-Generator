@@ -1,10 +1,10 @@
-# instrumentation-amplifier
+# Instrumentation-Amplifier
 3-op-amp instrumentation amplifier with PWM-generated differential and common-mode noise source.
 
 
 #### Implementation of an instrumentation Amplififer with PWM-generated differential and common-mode noise source
 
-![Figure what](https://github.com/Terbytes/Arduino-Atmel-sPWM/blob/master/im/pulses_1.JPG?raw=true "Figure")
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Common_Mode_Differential_Signal_Generator.png "Figure")
 
 ## Introduction
 
