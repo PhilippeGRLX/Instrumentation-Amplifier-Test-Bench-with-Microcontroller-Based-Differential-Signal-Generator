@@ -67,7 +67,7 @@ GenerateClassCluster=0
 DocumentUniqueId=CZRDZIQN
 
 [Document2]
-DocumentPath=Filtre_PWM60Hz.SchDoc
+DocumentPath=Filters_PWM60Hz.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -101,7 +101,7 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document4]
-DocumentPath=Filtre_PWM1kHz.SchDoc
+DocumentPath=Filters_PWM1kHz.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -118,7 +118,7 @@ GenerateClassCluster=0
 DocumentUniqueId=BKCTZZTD
 
 [Document5]
-DocumentPath=Differential_Noise_Generator.SchDoc
+DocumentPath=Differential_Signal_Generator.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
