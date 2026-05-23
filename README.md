@@ -48,6 +48,7 @@ After analog filtering, the low-frequency sinusoidal envelopes are recovered whi
 #### Signal Generator
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Common_Mode_Differential_Signal_Generator.png "Figure")
 #### Instrumentation Amplifier
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier.png "Figure")
 #### Performance
 
 ## Compatibility
