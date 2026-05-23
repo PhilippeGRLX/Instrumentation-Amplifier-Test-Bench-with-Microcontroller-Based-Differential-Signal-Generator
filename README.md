@@ -55,6 +55,26 @@ $$
 #### First-order active low-pass filter
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_60Hz.png "Figure")
 
+The first-order active low-pass filter is used to attenuate the high-frequency PWM carrier while preserving the reconstructed sinusoidal envelope.
+
+Transfer function:
+
+$$
+H(s)=\frac{-R_f}{R_2}\frac{1}{1+R_f C_f s}
+$$
+
+Cutoff frequency:
+
+$$
+f_c=\frac{1}{2\pi R_f C_f}
+$$
+
+| Filter | Design cutoff frequency |
+|---|---|
+| 60 Hz path | 164 Hz |
+
+
+
 #### Second-order Sallen-Key low-pass filter
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_1kHz.png "Figure")
 
