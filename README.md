@@ -35,15 +35,16 @@ The first-order active high-pass filters are used to attenuate low-frequency com
 
 Transfer function:
 
-\[
+$$
 H(s)=\frac{-R_f C_1 s}{1+R_1 C_1 s}
-\]
+$$
 
 Cutoff frequency:
 
-\[
+$$
 f_c=\frac{1}{2\pi R_1 C_1}
-\]
+$$
+
 
 | Filter | Design cutoff frequency |
 |---|---|
