@@ -26,11 +26,30 @@ After analog filtering, the low-frequency sinusoidal envelopes are recovered whi
 
 ### Analog Filter Stages
 #### First-order active high-pass filter
-
 <p align="center">
   <img src="docs/images/HP_60Hz.png" width="49%" />
   <img src="docs/images/HP_1kHz.png" width="49%" />
 </p>
+
+The first-order active high-pass filters are used to attenuate low-frequency components and remove DC offsets before the low-pass reconstruction stages.
+
+Transfer function:
+
+\[
+H(s)=\frac{-R_f C_1 s}{1+R_1 C_1 s}
+\]
+
+Cutoff frequency:
+
+\[
+f_c=\frac{1}{2\pi R_1 C_1}
+\]
+
+| Filter | Design cutoff frequency |
+|---|---|
+| 60 Hz path | 19 Hz |
+| 1 kHz path | 19 Hz |
+
 
 #### First-order active low-pass filter
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_60Hz.png "Figure")
