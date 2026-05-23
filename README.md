@@ -25,12 +25,21 @@ After analog filtering, the low-frequency sinusoidal envelopes are recovered whi
 -Add Figure: 60Hz and 1kHz envelopes, their BP filters and visible attenuation of PWM frequency.
 
 ### Analog Filter Stages
-
 #### First-order active high-pass filter
+
+<p align="center">
+  <img src="docs/images/HP_60Hz.png" width="49%" />
+  <img src="docs/images/HP_1kHz.png" width="49%" />
+</p>
+
 #### First-order active low-pass filter
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_60Hz.png "Figure")
+
 #### Second-order Sallen-Key low-pass filter
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_1kHz.png "Figure")
 
 ### Differential signal generator
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
 
 ### Instrumentation Amplifier
 
