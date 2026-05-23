@@ -254,10 +254,14 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for instrumentation-amplifier\instrumentation-amplifier.nsx
+DocumentPath=Project Outputs for instrumentation-amplifier\Design Rule Check - Instrumentation-Amplifier.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
+DocumentPath=Project Outputs for instrumentation-amplifier\instrumentation-amplifier.nsx
+DItemRevisionGUID=
+
+[GeneratedDocument3]
 DocumentPath=Simulation\instrumentation-amplifier.sdf
 DItemRevisionGUID=
 
