@@ -1,4 +1,4 @@
-# instrumentation-amplifier
+# Instrumentation-Amplifier
 
 #### Implementation of an instrumentation Amplififer with PWM-generated differential and common-mode noise source
 
@@ -77,6 +77,25 @@ $$
 
 #### Second-order Sallen-Key low-pass filter
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_1kHz.png "Figure")
+
+The second-order Sallen-Key low-pass filter is used to provide stronger attenuation of the high-frequency PWM carrier while preserving the 1 kHz sinusoidal envelope.
+
+Transfer function:
+
+$$
+H(s)=\frac{1}{R_1 R_2 C_1 C_2 s^2 + (R_1 C_1 + R_2 C_1 + R_2 C_2)s + 1}
+$$
+
+Cutoff frequency:
+
+$$
+f_c=\frac{1}{2\pi\sqrt{R_1 R_2 C_1 C_2}}
+$$
+
+| Filter | Design cutoff frequency |
+|---|---|
+| 1 kHz path | 2 kHz |
+```
 
 ### Differential signal generator
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
