@@ -1,6 +1,6 @@
-# Instrumentation-Amplifier
+# Instrumentation Amplifier Test Bench with Microcontroller-Based Differential Signal Generator
 
-#### Implementation of an instrumentation Amplififer with PWM-generated differential and common-mode noise source
+#### Implementation of an instrumentation amplififer with PWM-generated differential and common-mode noise source
 
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Hero_image.png "Figure")
 
