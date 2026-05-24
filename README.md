@@ -95,7 +95,7 @@ $$
 | Filter | Design cutoff frequency |
 |---|---|
 | 1 kHz path | 2 kHz |
-```
+
 
 ### Differential signal generator
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
