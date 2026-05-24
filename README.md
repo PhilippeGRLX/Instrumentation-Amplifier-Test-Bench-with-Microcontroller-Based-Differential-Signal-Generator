@@ -83,7 +83,13 @@ The second-order Sallen-Key low-pass filter is used to provide stronger attenuat
 Transfer function:
 
 $$
-H(s)=\frac{1}{R_1 R_2 C_1 C_2 s^2 + (R_1 C_1 + R_2 C_1 + R_2 C_2)s + 1}
+T(s)=\frac{K G_1 G_2 / C^2}{s^2+s\frac{G_1+G_2(2-K)}{C}+\frac{G_1G_2}{C^2}}
+$$
+
+where:
+
+$$
+G_1=\frac{1}{R_1}, \qquad G_2=\frac{1}{R_2}
 $$
 
 Cutoff frequency:
