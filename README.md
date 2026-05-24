@@ -6,10 +6,68 @@
 
 ## Introduction
 
-The aim of this repo is to help the hobbyist or student build a strong understanding of instrumentation amplifiers. It also presents a practical method to generate clean sinusoidal signals using a microcontroller and analog filtering techniques.
+The aim of this repository is to help students, hobbyists and engineers build
+a practical understanding of instrumentation amplifiers, differential signal
+generation and common-mode rejection.
 
+This project combines:
+- microcontroller-based PWM signal generation,
+- analog filtering techniques,
+- differential and common-mode signal synthesis,
+- and experimental instrumentation amplifier validation.
+
+The generated signals are specifically designed to bench-test a 3-op-amp
+instrumentation amplifier architecture under controlled noisy conditions.
+
+Two sinusoidal envelopes (~60 Hz and ~1 kHz) are reconstructed from PWM
+carrier signals using analog filter stages. These signals are then combined
+into differential and common-mode components in order to experimentally
+evaluate common-mode rejection and signal recovery performance.
+
+The repository also documents the complete hardware implementation,
+including:
+- breadboard prototyping,
+- PCB design,
+- firmware generation,
+- analog filtering,
+- and experimental validation.
 
 ## Table of Contents
+
+- [Introduction](#introduction)
+
+- [System Overview](#system-overview)
+  - [Basics of PWM](#basics-of-pwm)
+  - [Generating Sinusoidal Signals from Filtered PWM Carriers](#generating-sinusoidal-signals-from-filtered-pwm-carriers)
+  - [Analog Filter Stages](#analog-filter-stages)
+    - [First-Order Active High-Pass Filter](#first-order-active-high-pass-filter)
+    - [First-Order Active Low-Pass Filter](#first-order-active-low-pass-filter)
+    - [Second-Order Sallen-Key Low-Pass Filter](#second-order-sallen-key-low-pass-filter)
+
+- [Differential Signal Generator](#differential-signal-generator)
+
+- [Instrumentation Amplifier](#instrumentation-amplifier)
+
+- [CMRR and Measured Performance](#cmrr-and-measured-performance)
+
+- [Testing the Signal](#testing-the-signal)
+  - [Viewing PWM Carrier Signals](#viewing-pwm-carrier-signals)
+  - [Viewing Filtered Sinusoidal Signals](#viewing-filtered-sinusoidal-signals)
+  - [Viewing Noisy Differential Signals](#viewing-noisy-differential-signals)
+  - [Viewing Common-Mode Attenuation](#viewing-common-mode-attenuation)
+
+- [Hardware Implementation](#hardware-implementation)
+  - [Breadboard Prototype](#breadboard-prototype)
+  - [PCB Design](#pcb-design)
+    - [Signal Generator](#signal-generator)
+    - [Instrumentation Amplifier](#instrumentation-amplifier-1)
+    - [Performance](#performance)
+
+- [Compatibility](#compatibility)
+
+- [Safety](#safety)
+
+- [Acknowledgements](#acknowledgements)
 
 
 ## System overview
@@ -127,3 +185,21 @@ $$
 
 ## Compatibility
 ## Safety
+## Acknowledgements
+
+Parts of this project were inspired by laboratory material and concepts
+developed for the course:
+
+**GEL-3000 - Électronique des composants intégrés (Univeristé Laval)**
+
+Special thanks to:
+- Prof. Benoit Gosselin
+- Sébastien Rigaut
+- Michelle Janusz
+- Antoine Lefloïc
+
+for their contributions to the original laboratory framework and educational material.
+
+This repository extends and adapts those concepts into a standalone experimental
+instrumentation amplifier and signal-generation test bench.
+
