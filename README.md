@@ -17,7 +17,8 @@ This project combines:
 - and experimental instrumentation amplifier validation.
 
 The generated signals are specifically designed to bench-test a 3-op-amp
-instrumentation amplifier architecture under controlled noisy conditions.
+instrumentation amplifier architecture under controlled differential and
+common-mode noise conditions representative of ambient electromagnetic interference.
 
 Two sinusoidal envelopes (~60 Hz and ~1 kHz) are reconstructed from PWM
 carrier signals using analog filter stages. These signals are then combined
