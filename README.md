@@ -33,6 +33,7 @@ including:
 - analog filtering,
 - and experimental validation.
 
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -73,7 +74,7 @@ including:
 
 ## System overview
 ### Basics of PWM
-
+(Coming soon)
 ### Generating sinusoidal signals from filtered PWM carriers
 The Arduino generates two high-frequency PWM carrier signals.
 
@@ -81,7 +82,7 @@ Instead of directly producing analog voltages, the PWM duty cycle is dynamically
 
 After analog filtering, the low-frequency sinusoidal envelopes are recovered while the high-frequency PWM carriers are attenuated.
 
--Add Figure: 60Hz and 1kHz envelopes, their BP filters and visible attenuation of PWM frequency.
+(Coming soon) Figure: 60Hz and 1kHz envelopes, their BP filters and visible attenuation of PWM frequency.
 
 ### Analog Filter Stages
 #### First-order active high-pass filter
@@ -95,13 +96,13 @@ The first-order active high-pass filters are used to attenuate low-frequency com
 Transfer function:
 
 $$
-H(s)=\frac{-R_f C_1 s}{1+R_1 C_1 s}
+H(s)=\frac{-R_f C_{in} s}{1+R_{in} C_{in} s}
 $$
 
 Cutoff frequency:
 
 $$
-f_c=\frac{1}{2\pi R_1 C_1}
+f_c=\frac{1}{2\pi R_{in} C_{in}}
 $$
 
 
@@ -119,7 +120,7 @@ The first-order active low-pass filter is used to attenuate the high-frequency P
 Transfer function:
 
 $$
-H(s)=\frac{-R_f}{R_2}\frac{1}{1+R_f C_f s}
+H(s)=\frac{-R_f}{R_{in}}\frac{1}{1+R_f C_f s}
 $$
 
 Cutoff frequency:
@@ -142,19 +143,19 @@ The second-order Sallen-Key low-pass filter is used to provide stronger attenuat
 Transfer function:
 
 $$
-T(s)=\frac{K G_1 G_2 / C^2}{s^2+s\frac{G_1+G_2(2-K)}{C}+\frac{G_1G_2}{C^2}}
+T(s)=\frac{K G_{4a} G_{4b} / C^2}{s^2+s\frac{G_{4a}+G_{4b}(2-K)}{C}+\frac{G_{4a}G_{4b}}{C^2}}
 $$
 
 where:
 
 $$
-G_1=\frac{1}{R_1}, \qquad G_2=\frac{1}{R_2}
+G_{4a}b=\frac{1}{R_{4a}}, \qquad G_{4b}=\frac{1}{R_{4b}}
 $$
 
 Cutoff frequency:
 
 $$
-f_c=\frac{1}{2\pi\sqrt{R_1 R_2 C_1 C_2}}
+f_c=\frac{1}{2\pi\sqrt{R_{4a} R_{4b} C_1 C_2}}
 $$
 
 | Filter | Design cutoff frequency |
@@ -166,6 +167,17 @@ $$
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
 
 ### Instrumentation Amplifier
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier_sch.png "Figure")
+
+The instrumentation amplifier is implemented using the classic 3-op-amp topology. 
+The first stage provides high input impedance and differential gain, while the second
+ stage subtracts the two amplified signals and rejects the common-mode component.
+
+Differential gain:
+
+$$
+A_d = \frac{R_2}{R_1} (1+\frac{R_3}{R_4/2})
+$$
 
 ## CMRR and Measured Performance
 
