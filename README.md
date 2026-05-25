@@ -143,7 +143,7 @@ The second-order Sallen-Key low-pass filter is used to provide stronger attenuat
 Transfer function:
 
 $$
-T(s)=\frac{K G_{4a} G_{4b} / C^2}{s^2+s\frac{G_{4a}+G_{4b}(2-K)}{C}+\frac{G_{4a}G_{4b}}{C^2}}
+T(s)=\frac{K G_{4a} G_{4b} / C^2}{s^2+s\frac{G_{4a}+G_{4b}(2-K)}{C}+\frac{G_{4a}G_{4b}}{C^2}} = \frac{a_0}{s^2 + s(\frac{\omega_0}{Q})+ \omega_0^2}
 $$
 
 where:
@@ -179,12 +179,21 @@ $$
 A_d = \frac{R_2}{R_1} (1+\frac{R_3}{R_4/2})
 $$
 
+Common-mode rejection ratio:
+
+$$
+CMRR = \frac{A_d}{A_{cm}}
+$$
+
+$$
+CMRR_{dB}=20\log_{10}\left(\frac{A_d}{A_{cm}}\right)
+$$
 ## CMRR and Measured Performance
 
 ## Testing the Signal
 ### Viewing PWM carrier signals
 ### Viewing filtered sinusoidal signals
-### Viewing noisy differential signals
+### Viewing differential signals with common mode
 ### Viewing common-mode attenuation
 
 ## Hardware Implementation
@@ -203,7 +212,7 @@ $$
 Parts of this project were inspired by laboratory material and concepts
 developed for the course:
 
-**GEL-3000 - Électronique des composants intégrés (Univeristé Laval)**
+**GEL-3000 - Électronique des composants intégrés (Université Laval)**
 
 Special thanks to:
 - Prof. Benoit Gosselin
