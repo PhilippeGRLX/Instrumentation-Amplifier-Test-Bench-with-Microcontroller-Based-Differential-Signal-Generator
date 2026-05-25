@@ -155,7 +155,7 @@ $$
 Cutoff frequency:
 
 $$
-f_c=\frac{1}{2\pi\sqrt{R_{4a} R_{4b} C_1 C_2}}
+f_c=\frac{1}{2\pi\sqrt{R_{4a} R_{4b} C_{4a} C_{4b}}}
 $$
 
 | Filter | Design cutoff frequency |
