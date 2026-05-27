@@ -193,6 +193,21 @@ $$
 ## Testing the Signal
 ### Viewing PWM carrier signals
 ### Viewing filtered sinusoidal signals
+
+The two filtered outputs are used as the building blocks for the test signal:
+- \(V_{icm}\): 60 Hz sinusoidal common-mode component
+- \(V_{id}\): 1 kHz sinusoidal differential-mode component
+
+<p align="center">
+  <img src="docs/images/Vicm_mai_25_2026.png" width="49%" />
+  <img src="docs/images/Vid_mai_25_2026.png" width="49%" />
+</p>
+
+The first 1 kHz reconstruction showed visible distortion most likely due to the limited
+number of PWM duty-cycle samples per sine period and insufficient attenuation
+of higher-order harmonics. Further tuning of the Sallen-Key cutoff frequency
+and/or the lookup-table update rate is required.
+
 ### Viewing differential signals with common mode
 ### Viewing common-mode attenuation
 
