@@ -195,8 +195,8 @@ $$
 ### Viewing filtered sinusoidal signals
 
 The two filtered outputs are used as the building blocks for the test signal:
-- \(V_{icm}\): 60 Hz sinusoidal common-mode component
-- \(V_{id}\): 1 kHz sinusoidal differential-mode component
+- $V_{icm}$: 60 Hz sinusoidal common-mode component
+- $V_{id}$: 1 kHz sinusoidal differential-mode component
 
 <p align="center">
   <img src="docs/images/Vicm_mai_25_2026.png" width="49%" />
