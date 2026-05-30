@@ -195,8 +195,8 @@ $$
 ### Viewing filtered sinusoidal signals
 
 The two filtered outputs are used as the building blocks for the test signal:
-- $V_{icm}$: 60 Hz sinusoidal common-mode component
-- $V_{id}$: 1 kHz sinusoidal differential-mode component
+- $V_{icm}$ : 60 Hz sinusoidal common-mode component
+- $V_{id}$ : 1 kHz sinusoidal differential-mode component
 
 <p align="center">
   <img src="docs/images/Vicm_mai_25_2026.png" width="49%" />
@@ -222,6 +222,13 @@ and/or the lookup-table update rate is required.
 
 ## Compatibility
 ## Safety
+
+## Resources
+
+Related instrumentation amplifier projects:
+
+- [Laboratory Instrumentation Amplifier with 16-bit 1 MSPS ADC](https://github.com/drmcnelson/Laboratory-Instrumentation-Amplifier-with-16bit-1MSPS-ADC)
+
 ## Acknowledgements
 
 Parts of this project were inspired by laboratory material and concepts
@@ -231,8 +238,8 @@ developed for the course:
 
 Special thanks to:
 - Prof. Benoit Gosselin
-- Sébastien Rigaut
 - Michelle Janusz
+- Sébastien Rigaut
 - Antoine Lefloïc
 
 for their contributions to the original laboratory framework and educational material.
