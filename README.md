@@ -192,6 +192,9 @@ $$
 
 ## Testing the Signal
 ### Viewing PWM carrier signals
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/PWM_60Hz_mai_30_2026.png "Figure")
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/PWM_1kHz_mai_30_2026.png "Figure")
+
 ### Viewing filtered sinusoidal signals
 
 The two filtered outputs are used as the building blocks for the test signal:
