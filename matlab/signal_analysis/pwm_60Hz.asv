@@ -1,0 +1,52 @@
+clear; close all; clc;
+
+%% Locate LUT file
+
+%% Gives the directory of this current MATLAB file
+script_dir = fileparts(mfilename('fullpath'));
+%disp(script_dir)
+
+    % Find file relative to current matlab file directory 
+filename = fullfile(script_dir, '..', '..', ...
+    'firmware', 'pwm_signal_generator', ...
+    'generated', 'f60Hz.h');
+
+%disp(filename)
+
+%% Read file
+
+txt = fileread(filename);
+
+%% Extract Sampling Frequency fs
+
+FS_match = regexp(txt, '#define\s+FS\s+(\d+)', 'tokens', 'once');
+FS = str2double(FS_match{1});
+
+%% Extract LUT only between { }
+
+lut_text = regexp(txt, '\{(.*?)\}', 'tokens', 'once');
+
+LUT = sscanf(lut_text{1}, '%d,');
+LUT = LUT(:).';   % force row vector
+
+%% Signal parameters
+
+N = length(LUT);
+f0 = FS/N;
+
+%% Plot sinusidal envelope
+
+signal = [LUT];
+
+t = (0:length(signal)-1)/FS;
+
+figure;
+stairs(t*1000, signal, 'LineWidth', 1.2);
+grid on;
+
+xlabel('Time [ms]');
+ylabel('Look Up Table Value (0-1023)');
+title(sprintf('Sinusidal Enveloppe - LUT 60 Hz - %.3f Hz, N = %d, FS = %d Hz', f0, N, FS));
+
+xlim([0 1/f0]*1000);
+ylim([0 1023]);

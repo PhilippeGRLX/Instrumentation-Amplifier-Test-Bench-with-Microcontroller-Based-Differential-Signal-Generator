@@ -75,14 +75,47 @@ including:
 ## System overview
 ### Basics of PWM
 (Coming soon)
+
 ### Generating sinusoidal signals from filtered PWM carriers
-The Arduino generates two high-frequency PWM carrier signals.
 
-Instead of directly producing analog voltages, the PWM duty cycle is dynamically modulated using sinusoidal lookup tables.
+The Arduino does not directly generate analog sinusoidal voltages.
 
-After analog filtering, the low-frequency sinusoidal envelopes are recovered while the high-frequency PWM carriers are attenuated.
+Instead, a sinusoidal lookup table (LUT) is used to continuously adjust the duty cycle of a high-frequency PWM carrier. The resulting PWM signal contains the desired low-frequency sinusoidal information together with significant high-frequency spectral content centered around the PWM carrier frequency.
 
-(Coming soon) Figure: 60Hz and 1kHz envelopes, their BP filters and visible attenuation of PWM frequency.
+The analog reconstruction filters are designed to:
+- remove the DC component introduced by the PWM duty-cycle offset,
+- preserve the desired sinusoidal envelope,
+- attenuate the PWM carrier and its associated sidebands.
+
+The figures below illustrate the signal generation process for the 60 Hz path.
+
+#### Sinusoidal lookup table
+
+<p align="center">
+  <img src="docs/images/signal_analysis/PWM60Hz_signal_time_analysis.png" width="85%" />
+</p>
+
+The LUT defines the duty-cycle trajectory used to modulate the PWM carrier.
+
+#### Frequency-domain analysis
+
+<p align="center">
+  <img src="docs/images/signal_analysis/PWM60Hz_FFT_LUT.png" width="49%" />
+  <img src="docs/images/signal_analysis/PWM60Hz_FFT_PWM.png" width="49%" />
+</p>
+
+The LUT spectrum contains the desired 60 Hz component and a large DC offset. After PWM modulation, additional spectral content appears around the carrier frequency.
+
+#### PWM spectrum and filter response
+
+<p align="center">
+  <img src="docs/images/signal_analysis/PWM60Hz_FFT_PWM_and_filter.png" width="49%" />
+  <img src="docs/images/signal_analysis/PWM60Hz_FFT_PWM_and_filter_zoom.png" width="49%" />
+</p>
+
+The 19 Hz – 164 Hz band-pass response preserves the desired 60 Hz component while attenuating both the DC offset and the high-frequency PWM carrier.
+
+This frequency-domain view provides direct insight into the reconstruction process before any hardware measurements are performed.
 
 ### Analog Filter Stages
 #### First-order active high-pass filter
@@ -192,8 +225,8 @@ $$
 
 ## Testing the Signal
 ### Viewing PWM carrier signals
-![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/PWM_60Hz_mai_30_2026.png "Figure")
-![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/PWM_1kHz_mai_30_2026.png "Figure")
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/oscilloscope/PWM_60Hz_mai_30_2026.png "Figure")
+![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/oscilloscope/PWM_1kHz_mai_30_2026.png "Figure")
 
 ### Viewing filtered sinusoidal signals
 
@@ -202,8 +235,8 @@ The two filtered outputs are used as the building blocks for the test signal:
 - $V_{id}$ : 1 kHz sinusoidal differential-mode component
 
 <p align="center">
-  <img src="docs/images/Vicm_mai_25_2026.png" width="49%" />
-  <img src="docs/images/Vid_mai_25_2026.png" width="49%" />
+  <img src="docs/images/oscilloscope/Vicm_mai_25_2026.png" width="49%" />
+  <img src="docs/images/oscilloscope/Vid_mai_25_2026.png" width="49%" />
 </p>
 
 The first 1 kHz reconstruction showed visible distortion most likely due to the limited
