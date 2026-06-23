@@ -11,10 +11,10 @@ a practical understanding of instrumentation amplifiers, differential signal
 generation and common-mode rejection.
 
 This project combines:
-- microcontroller-based PWM signal generation,
-- analog filtering techniques,
-- differential and common-mode signal synthesis,
-- and experimental instrumentation amplifier validation.
+- Microcontroller-based PWM signal generation,
+- Analog filtering techniques,
+- Differential and common-mode signal synthesis,
+- Experimental instrumentation amplifier validation.
 
 The generated signals are specifically designed to bench-test a 3-op-amp
 instrumentation amplifier architecture under controlled differential and
@@ -23,15 +23,15 @@ common-mode noise conditions representative of ambient electromagnetic interfere
 Two sinusoidal envelopes (~60 Hz and ~1 kHz) are reconstructed from PWM
 carrier signals using analog filter stages. These signals are then combined
 into differential and common-mode components in order to experimentally
-evaluate common-mode rejection (CMRR) and signal recovery performance.
+evaluate common-mode rejection rate (CMRR) and signal recovery performance.
 
 The repository also documents the complete hardware implementation,
 including:
-- breadboard prototyping,
+- Breadboard prototyping,
 - PCB design,
-- firmware generation,
-- analog filtering,
-- and experimental validation.
+- Firmware generation,
+- Analog filtering,
+- Experimental validation.
 
 
 ## Table of Contents
@@ -75,9 +75,9 @@ including:
 
 ### Generating sinusoidal signals from filtered PWM carriers
 
-The Arduino does not directly generate analog sinusoidal voltages.
+The Arduino could generate a staircase approximation of a sinusoidal waveform directly from the LUT values. However, such an approach would retain the quantization steps within the signal bandwidth and provide limited reconstruction quality.
 
-Instead, a sinusoidal lookup table (LUT) is used to continuously adjust the duty cycle of a high-frequency PWM carrier. The resulting PWM signal contains the desired low-frequency sinusoidal information together with significant high-frequency spectral content centered around the PWM carrier frequency.
+Instead, a sinusoidal lookup table (LUT) is used to continuously adjust the duty cycle of a high-frequency PWM carrier. By shifting most of the unwanted spectral content around the PWM carrier frequency, analog reconstruction filters can effectively recover the low-frequency sinusoidal envelope.
 
 The analog reconstruction filters are designed to:
 - remove the DC component introduced by the PWM duty-cycle offset,

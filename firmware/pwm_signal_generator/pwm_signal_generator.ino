@@ -63,8 +63,8 @@ The firmware has since been modified and extended for this project.
 // Lookup Tables
 // -----------------------------------------------------------------------------
 
-#include "generated/f60Hz.h"
-#include "generated/f1kHz.h"
+#include "lookup_tables/f60Hz.h"
+#include "lookup_tables/f1kHz.h"
 
 // -----------------------------------------------------------------------------
 // PWM Output Pins
