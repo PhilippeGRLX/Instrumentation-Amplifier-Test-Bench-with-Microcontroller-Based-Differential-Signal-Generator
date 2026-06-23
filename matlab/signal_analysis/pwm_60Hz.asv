@@ -151,7 +151,7 @@ fc_high = 164;
 w = 2*pi*f_pwm;
 w(1) = eps;
 
-%% ToDo: Use final passive component values for transferfunctions
+%% ToDo: 
 H_hp = 1j*w ./ (1j*w + 2*pi*fc_low);
 H_lp = (2*pi*fc_high) ./ (1j*w + 2*pi*fc_high);
 
