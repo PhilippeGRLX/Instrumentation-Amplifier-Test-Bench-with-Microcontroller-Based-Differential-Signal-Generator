@@ -145,7 +145,7 @@ Figure 5 focuses on the low-frequency region of interest. The DC component is st
 The resulting 19 Hz – 164 Hz band-pass response preserves the desired 60 Hz sinusoidal component while attenuating both the DC offset and the high-frequency PWM carrier. The origin of these cutoff frequencies is detailed in the Analog Filter Stages section.
 
 This frequency-domain analysis provides valuable insight into the signal reconstruction process before any hardware measurements are performed.
-> [!TIP]
+> [!ToDo]
 > Adjust the MATLAB script to use the final passive component values and plot the actual filter transfer functions.
 ### Analog Filter Stages
 #### First-order active high-pass filter
