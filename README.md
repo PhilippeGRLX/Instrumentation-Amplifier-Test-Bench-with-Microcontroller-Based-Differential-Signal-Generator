@@ -145,8 +145,6 @@ Figure 5 focuses on the low-frequency region of interest. The DC component is st
 The resulting 19 Hz – 164 Hz band-pass response preserves the desired 60 Hz sinusoidal component while attenuating both the DC offset and the high-frequency PWM carrier. The origin of these cutoff frequencies is detailed in the Analog Filter Stages section.
 
 This frequency-domain analysis provides valuable insight into the signal reconstruction process before any hardware measurements are performed.
-> [!ToDo]
-> Adjust the MATLAB script to use the final passive component values and plot the actual filter transfer functions.
 ### Analog Filter Stages
 #### First-order active high-pass filter
 <p align="center">
@@ -193,7 +191,7 @@ $$
 
 | Filter | Design cutoff frequency |
 |---|---|
-| 60 Hz path | 164 Hz |
+| 60 Hz path | 159 Hz |
 
 
 
@@ -205,13 +203,20 @@ The second-order Sallen-Key low-pass filter is used to provide stronger attenuat
 Transfer function:
 
 $$
-T(s)=\frac{K G_{4a} G_{4b} / C^2}{s^2+s\frac{G_{4a}+G_{4b}(2-K)}{C}+\frac{G_{4a}G_{4b}}{C^2}} = \frac{a_0}{s^2 + s(\frac{\omega_0}{Q})+ \omega_0^2}
+T(s)=
+\frac{\frac{K}{R_{4a}R_{4b}C^2}}
+{s^2+s\frac{\frac{1}{R_{4a}}+\frac{2-K}{R_{4b}}}{C}
++\frac{1}{R_{4a}R_{4b}C^2}}
 $$
 
 where:
 
 $$
-G_{4a}b=\frac{1}{R_{4a}}, \qquad G_{4b}=\frac{1}{R_{4b}}
+K = 1+\frac{R_B}{R_A}
+$$
+
+$$
+C_{4a}=C_{4b}=C
 $$
 
 Cutoff frequency:
