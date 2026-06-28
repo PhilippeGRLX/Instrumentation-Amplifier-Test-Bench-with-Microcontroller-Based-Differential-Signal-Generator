@@ -9,7 +9,7 @@ script_dir = fileparts(mfilename('fullpath'));
     % Find file relative to current matlab file directory 
 filename = fullfile(script_dir, '..', '..', ...
     'firmware', 'pwm_signal_generator', ...
-    'generated', 'f60Hz.h');
+    'lookup_tables', 'f60Hz.h');
 
 %disp(filename)
 
@@ -145,21 +145,39 @@ title('Fast Fourier Transform (FFT) of PWM Signal');
 
 %% Figure 5 - PWM FFT with 60 Hz band-pass filter overlay
 
-fc_low  = 19;
-fc_high = 164;
-
 w = 2*pi*f_pwm;
 w(1) = eps;
 
-%% ToDo: Use final passive component values for transferfunctions
-H_hp = 1j*w ./ (1j*w + 2*pi*fc_low);
-H_lp = (2*pi*fc_high) ./ (1j*w + 2*pi*fc_high);
+%% ------------------------------------------------------------------------
+%% Filter component values (60 Hz signal path)
+%% ------------------------------------------------------------------------
+
+% High-pass filter
+Rin_HP = 8.2e3;      % Ohm
+Rf_HP  = 8.2e3;        % Ohm
+Cin_HP = 1e-6;       % F
+
+% Low-pass filter
+Rin_LP = 100e3;      % Ohm
+Rf_LP  = 100e3;      % Ohm
+Cf_LP  = 10e-9;      % F
+
+%% Derived cutoff frequencies
+
+fc_HP = 1/(2*pi*Rin_HP*Cin_HP);
+fc_LP = 1/(2*pi*Rf_LP*Cf_LP);
+
+%% Transfer functions
+
+s = 1j*w;
+
+H_hp = (-Rf_HP*Cin_HP*s) ./ (1 + Rin_HP*Cin_HP*s);
+
+H_lp = (-Rf_LP/Rin_LP) ./ (1 + Rf_LP*Cf_LP*s);
 
 H_bp = H_hp .* H_lp;
 
-H_bp_mag = abs(H_bp);
-H_bp_mag = H_bp_mag / max(H_bp_mag);
-H_bp_dB = 20*log10(H_bp_mag + eps);
+H_bp_dB = 20*log10(abs(H_bp));
 
 figure;
 plot(f_pwm, PWM_mag_dB, 'LineWidth', 1.2);
@@ -167,8 +185,8 @@ hold on;
 plot(f_pwm, H_bp_dB, 'LineWidth', 1.8);
 grid on;
 
-xline(fc_low, '--', '19 Hz');
-xline(fc_high, '--', '164 Hz');
+xline(fc_HP, '--', '19 Hz');
+xline(fc_LP, '--', '164 Hz');
 xline(f0, ':', sprintf('%.1f Hz', f0));
 xline(FS, ':', sprintf('f_{PWM} = %.0f Hz', FS));
 
@@ -178,5 +196,6 @@ title('PWM FFT with 60 Hz Filter Response Overlay');
 
 legend('PWM FFT', '60 Hz filter response');
 
-xlim([0 1000]);
+%xlim([0 1000]); %toggle for zoomed version
+xlim([0 20000]);
 ylim([-100 5]);
