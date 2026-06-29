@@ -3,30 +3,45 @@ clear; close all; clc;
 %% Locate LUT file
 
 %% Gives the directory of this current MATLAB file
-script_dir = fileparts(mfilename('fullpath'));
-%disp(script_dir)
+clear; close all; clc;
 
-    % Find file relative to current matlab file directory 
+%% Locate LUT file
+
+script_dir = fileparts(mfilename('fullpath'));
+
+if isempty(script_dir)
+    script_dir = pwd;
+end
+
 filename = fullfile(script_dir, '..', '..', ...
     'firmware', 'pwm_signal_generator', ...
     'lookup_tables', 'f1kHz.h');
 
-%disp(filename)
-
-%% Read file
-
+if ~isfile(filename)
+    error('LUT file not found: %s', filename);
+end
 txt = fileread(filename);
 
-%% Extract Sampling Frequency fs
+%% Extract Sampling Frequency FS
 
-FS_match = regexp(txt, '#define\s+FS\s+(\d+)', 'tokens', 'once');
-FS = str2double(FS_match{1});
+% Timer2 Fast PWM, 8-bit, prescaler = 1
+% Arduino clock: 16 MHz
+% PWM frequency: 16 MHz / 256 = 62500 Hz
+FS = 62500;
 
-%% Extract LUT only between { }
+fprintf('PWM update frequency FS = %.0f Hz\n', FS);
 
+%% Extract LUT values
+
+% Extract everything between '{' and '}'
 lut_text = regexp(txt, '\{(.*?)\}', 'tokens', 'once');
 
-LUT = sscanf(lut_text{1}, '%d,');
+if isempty(lut_text)
+    error('Could not locate LUT data in %s.', filename);
+end
+
+% Convert comma-separated values into a row vector
+LUT = sscanf(lut_text{1}, '%d,').';
 LUT = LUT(:).';   % force row vector
 
 %% Signal parameters
@@ -34,29 +49,30 @@ LUT = LUT(:).';   % force row vector
 N = length(LUT);
 f0 = FS/N;
 
-%% Figure 1 - Sinusoidal envelope (LUT)
+%% Figure 1 - Sinusoidal Lookup Table
 
 signal = LUT;
 
-t = (0:length(signal)-1)/FS;
+t = (0:N-1) / FS;
 
 figure;
 stairs(t*1000, signal, 'LineWidth', 1.2);
 grid on;
 
 xlabel('Time [ms]');
-ylabel('Look Up Table Value (0-1023)');
-title(sprintf('Sinusoidal Envelope - LUT 1kHz Hz - %.3f Hz, N = %d, FS = %d Hz', f0, N, FS));
+ylabel('LUT Value (8-bit)');
+title(sprintf('1 kHz Sinusoidal Lookup Table (f = %.2f Hz, N = %d, FS = %d Hz)', ...
+    f0, N, FS));
 
-xlim([0 1/f0]*1000);
-ylim([0 1023]);
+xlim([0 1/f0] * 1000);
+ylim([0 255]);
 
-%% Figure 2 - PWM carrier modulated by LUT
+%% Figure 2 - PWM Signal
 
-PWM_MAX = 1023;
+PWM_MAX = 255;
 
-% Number of points used to draw one PWM period in Matlab
-samples_per_pwm_period = 2*261;
+% Number of MATLAB samples used to draw one PWM period
+samples_per_pwm_period = 200;
 
 % Effective simulation sampling frequency
 FS_sim = FS * samples_per_pwm_period;
@@ -67,11 +83,11 @@ duty = LUT / PWM_MAX;
 % Repeat each LUT value over one PWM period
 duty_expanded = repelem(duty, samples_per_pwm_period);
 
-% Create normalized PWM carrier from 0 to 1
+% Generate one normalized PWM carrier (0 → 1)
 carrier_one_period = (0:samples_per_pwm_period-1) / samples_per_pwm_period;
-carrier = repmat(carrier_one_period, 1, length(LUT));
+carrier = repmat(carrier_one_period, 1, N);
 
-% Generate PWM signal
+% Generate PWM waveform
 pwm_signal = carrier < duty_expanded;
 
 % Time vector
@@ -85,14 +101,14 @@ grid on;
 
 xlabel('Time [ms]');
 ylabel('Amplitude');
-title(sprintf('PWM Signal Modulated by 60 Hz LUT - f_{PWM} = %d Hz', FS));
+title(sprintf('PWM Signal Modulated by 1 kHz LUT (f_{PWM} = %.0f Hz)', FS));
 
-legend('PWM signal', 'Sinusoidal LUT envelope');
+legend('PWM signal', 'Sinusoidal LUT');
 
-xlim([0 16]);      % zoom on first 3 ms
-ylim([-50 1075]);
+xlim([0 1/f0] * 1000);
+ylim([-10 265]);
 
-%% Figure 3 - FFT of sinusoidal LUT
+%% Figure 3 - FFT of Sinusoidal LUT
 
 LUT_fft = fft(LUT);
 
@@ -102,23 +118,23 @@ X_mag = abs(LUT_fft(1:floor(Nfft/2)+1));
 
 f = (0:floor(Nfft/2))*FS/Nfft;
 
-% Normalize for readability
-X_mag = X_mag / max(X_mag);
+% Normalize with respect to the largest AC component
+X_mag = X_mag / max(X_mag(2:end));
 
 figure;
 stem(f, X_mag, 'filled');
 grid on;
 
 xlabel('Frequency [Hz]');
-ylabel('Normalized Magnitude (linear)');
+ylabel('Normalized Magnitude');
 title('Fast Fourier Transform (FFT) of Sinusoidal LUT');
 
-xlim([0 500]);
+xlim([0 5000]);
 ylim([0 1.1]);
 
-%% Figure 4 - FFT of PWM signal
+%% Figure 4 - FFT of PWM Signal
 
-number_of_periods = 20; % For better resolution
+number_of_periods = 20;      % Improves frequency resolution
 
 pwm_for_fft = repmat(pwm_signal, 1, number_of_periods);
 
@@ -128,7 +144,7 @@ Nfft_pwm = length(PWM_fft);
 
 PWM_mag = abs(PWM_fft(1:floor(Nfft_pwm/2)+1));
 
-f_pwm = (0:floor(Nfft_pwm/2))*FS_sim/Nfft_pwm;
+f_pwm = (0:floor(Nfft_pwm/2)) * FS_sim / Nfft_pwm;
 
 PWM_mag = PWM_mag / max(PWM_mag);
 PWM_mag_dB = 20*log10(PWM_mag + eps);
@@ -137,35 +153,59 @@ figure;
 plot(f_pwm, PWM_mag_dB, 'LineWidth', 1.2);
 grid on;
 
-xlim([0 1000]);
-
 xlabel('Frequency [Hz]');
 ylabel('Normalized Magnitude [dB]');
 title('Fast Fourier Transform (FFT) of PWM Signal');
+
+xlim([0 100000]);
+ylim([-100 5]);
 
 %% Figure 5 - PWM FFT with 60 Hz band-pass filter overlay
 
 w = 2*pi*f_pwm;
 w(1) = eps;
+s = 1j*w;
 
 %% ------------------------------------------------------------------------
-%% Filter component values (60 Hz signal path)
+%% Filter component values (1 kHz signal path)
 %% ------------------------------------------------------------------------
 
 % High-pass filter
 Rin_HP = 8.2e3;      % Ohm
-Rf_HP  = 8.2e3;        % Ohm
-Cin_HP = 1e-6;       % F
+Rf_HP  = 8.2e3;      % Ohm
+Cin_HP = 1e-6;      % F
 
-% Low-pass filter
-Rin_LP = 100e3;      % Ohm
-Rf_LP  = 100e3;      % Ohm
-Cf_LP  = 10e-9;      % F
+%ToDO: Verify passive component values and Sallen-Key Formulas
+%% Sallen-Key low-pass filter with variable gain
+
+R4a = 4.7e3;      % Ohm
+R4b = 8.2e3;      % Ohm
+R4c = 3.3e3;      % Ohm
+
+C4a = 10e-9;      % F
+C4b = 10e-9;      % F
+
+RA = 8.2e3;       % Ohm
+RB = 8.2e3;       % Ohm
+
+a = R4c / (R4a + R4c);
+K = 1 + RB/RA;
+
+w0 = 1 / sqrt(R4a*R4b*C4a*C4b);
+fc_LP = w0 / (2*pi);
+
+Q = sqrt(R4a*R4b*C4a*C4b) / ...
+    (C4b*(R4a + R4b) + C4a*R4a*(1 - K));
+
+H_lp = (a*K*w0^2) ./ ...
+    (s.^2 + s.*(w0/Q) + w0^2);
+
+H_lp_dB = 20*log10(abs(H_lp));
 
 %% Derived cutoff frequencies
 
 fc_HP = 1/(2*pi*Rin_HP*Cin_HP);
-fc_LP = 1/(2*pi*Rf_LP*Cf_LP);
+fc_LP = 1/(2*pi*sqrt(R4a*R4b*C4a*C4b));
 
 %% Transfer functions
 
@@ -173,29 +213,31 @@ s = 1j*w;
 
 H_hp = (-Rf_HP*Cin_HP*s) ./ (1 + Rin_HP*Cin_HP*s);
 
-H_lp = (-Rf_LP/Rin_LP) ./ (1 + Rf_LP*Cf_LP*s);
+H_lp = (K/(R4a*R4b*C4a*C4b)) ./ ...
+    (s.^2 + ...
+    s.*((1/R4a + (2-K)/R4b)/C4a) + ...
+    1/(R4a*R4b*C4a*C4b));
 
-H_bp = H_hp .* H_lp;
+H_filter = H_hp .* H_lp;
 
-H_bp_dB = 20*log10(abs(H_bp));
+H_filter_dB = 20*log10(abs(H_filter));
+
 
 figure;
 plot(f_pwm, PWM_mag_dB, 'LineWidth', 1.2);
 hold on;
-plot(f_pwm, H_bp_dB, 'LineWidth', 1.8);
+plot(f_pwm, H_lp_dB, 'LineWidth', 1.8);
 grid on;
 
-xline(fc_HP, '--', '19 Hz');
-xline(fc_LP, '--', '164 Hz');
-xline(f0, ':', sprintf('%.1f Hz', f0));
+xline(f0, ':', sprintf('Signal = %.1f Hz', f0));
+xline(fc_LP, '--', sprintf('f_c = %.1f Hz', fc_LP));
 xline(FS, ':', sprintf('f_{PWM} = %.0f Hz', FS));
 
 xlabel('Frequency [Hz]');
 ylabel('Normalized Magnitude [dB]');
-title('PWM FFT with 60 Hz Filter Response Overlay');
+title('PWM FFT with 1 kHz Sallen-Key Low-Pass Filter Response Overlay');
 
-legend('PWM FFT', '60 Hz filter response');
+legend('PWM FFT', 'Sallen-Key LP response');
 
-%xlim([0 1000]); %toggle for zoomed version
-xlim([0 20000]);
-ylim([-100 5]);
+xlim([0 100000]);
+ylim([-100 10]);
