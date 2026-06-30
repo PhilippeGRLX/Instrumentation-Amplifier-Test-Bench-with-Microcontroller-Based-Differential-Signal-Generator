@@ -108,7 +108,7 @@ After analog filtering, the low-frequency sinusoidal envelope is reconstructed w
 
 Figure 2 shows the spectrum of the sinusoidal lookup table (LUT), revealing the desired 60 Hz component together with a large DC component resulting from the positive-only PWM duty-cycle range.
 
-Figure 3 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component. The PWM carrier however introduces undesireable frequency content that needs to be attenuated by the reconstruction filters.
+Figure 3 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component. The PWM carrier, however, also generates high-frequency spectral components around the carrier frequency (see Figure 4). These components are removed by the analog reconstruction filters, leaving only the desired low-frequency sinusoidal envelope.
 
 <p align="center">
   <img src="docs/images/signal_analysis/PWM60Hz_FFT_LUT.png" width="49%" />
@@ -117,7 +117,7 @@ Figure 3 shows the spectrum of the corresponding PWM signal. After modulation, t
 
 <p align="center">
   <em>Figure 2. Frequency spectrum of the 60 Hz lookup table.</em><br>
-  <em>Figure 3. Frequency spectrum of the LUT-modulated PWM signal.</em>
+  <em>Figure 3. Frequency spectrum of the LUT-modulated PWM signal(0-1kHz).</em>
 </p>
 
 This frequency-domain view highlights two important design objectives:
@@ -145,6 +145,25 @@ Figure 5 focuses on the low-frequency region of interest. The DC component is st
 The resulting 19 Hz – 164 Hz band-pass response preserves the desired 60 Hz sinusoidal component while attenuating both the DC offset and the high-frequency PWM carrier. The origin of these cutoff frequencies is detailed in the Analog Filter Stages section.
 
 This frequency-domain analysis provides valuable insight into the signal reconstruction process before any hardware measurements are performed.
+
+#### 1 kHz signal path
+
+The 1 kHz signal follows the same PWM reconstruction principle as the 60 Hz path. However, generating a 1 kHz sinusoid with the same timer configuration would provide too few duty-cycle updates per period, resulting in visible waveform distortion.
+
+To increase the temporal resolution, the 1 kHz signal is generated using **Timer2** configured for **8-bit Fast PWM** at **62.5 kHz**. Although this reduces the PWM amplitude resolution from 10 bits to 8 bits, the fourfold increase in carrier frequency provides 64 PWM updates per sinusoidal period instead of only 16. This significantly improves the reconstructed waveform while keeping the analog filtering requirements manageable.
+
+The figures below illustrate the frequency-domain behavior of the 1 kHz signal path.
+
+<p align="center">
+  <img src="docs/images/signal_analysis/PWM1kHz_FFT_PWM_and_filter.png" width="49%" />
+  <img src="docs/images/signal_analysis/PWM1kHz_FFT_PWM_and_filter_zoom.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Figure 6. Reconstruction filter response superimposed on the 1 kHz PWM spectrum.</em><br>
+  <em>Figure 7. Zoomed view of the 1 kHz passband.</em>
+</p>
+
 ### Analog Filter Stages
 #### First-order active high-pass filter
 <p align="center">

@@ -175,58 +175,57 @@ Rin_HP = 8.2e3;      % Ohm
 Rf_HP  = 8.2e3;      % Ohm
 Cin_HP = 1e-6;      % F
 
-%ToDO: Verify passive component values and Sallen-Key Formulas
-%% Sallen-Key low-pass filter with variable gain
+%% Sallen-Key low-pass filter - ideal design
 
-R4a = 4.7e3;      % Ohm
-R4b = 8.2e3;      % Ohm
-R4c = 3.3e3;      % Ohm
+% Design targets
+fc_LP = 2e3;       % Hz
+Q_LP  = 0.707;     % Butterworth
+C_LP  = 10e-9;     % F
 
-C4a = 10e-9;      % F
-C4b = 10e-9;      % F
+% Ideal design equations
+w0 = 2*pi*fc_LP;
 
-RA = 8.2e3;       % Ohm
-RB = 8.2e3;       % Ohm
+R_nom  = 1/(w0*C_LP);
+RA_nom = R_nom;
+RB_nom = (2 - 1/Q_LP)*RA_nom;
 
-a = R4c / (R4a + R4c);
-K = 1 + RB/RA;
+K = 1 + RB_nom/RA_nom;
+a = 1/K;
 
-w0 = 1 / sqrt(R4a*R4b*C4a*C4b);
-fc_LP = w0 / (2*pi);
-
-Q = sqrt(R4a*R4b*C4a*C4b) / ...
-    (C4b*(R4a + R4b) + C4a*R4a*(1 - K));
-
+% Ideal transfer function
 H_lp = (a*K*w0^2) ./ ...
-    (s.^2 + s.*(w0/Q) + w0^2);
+    (s.^2 + s.*(w0/Q_LP) + w0^2);
 
 H_lp_dB = 20*log10(abs(H_lp));
 
-%% Derived cutoff frequencies
+%% Complete reconstruction filter
 
+% High-pass transfer function
 fc_HP = 1/(2*pi*Rin_HP*Cin_HP);
-fc_LP = 1/(2*pi*sqrt(R4a*R4b*C4a*C4b));
 
-%% Transfer functions
+H_hp = (-Rf_HP*Cin_HP*s) ./ ...
+    (1 + Rin_HP*Cin_HP*s);
 
-s = 1j*w;
-
-H_hp = (-Rf_HP*Cin_HP*s) ./ (1 + Rin_HP*Cin_HP*s);
-
-H_lp = (K/(R4a*R4b*C4a*C4b)) ./ ...
-    (s.^2 + ...
-    s.*((1/R4a + (2-K)/R4b)/C4a) + ...
-    1/(R4a*R4b*C4a*C4b));
-
+% Complete 1 kHz reconstruction filter
 H_filter = H_hp .* H_lp;
-
 H_filter_dB = 20*log10(abs(H_filter));
+
+fprintf('\n--- Ideal 1 kHz reconstruction filter ---\n');
+fprintf('High-pass fc = %.1f Hz\n', fc_HP);
+fprintf('Sallen-Key fc = %.1f Hz\n', fc_LP);
+fprintf('Sallen-Key Q  = %.3f\n', Q_LP);
+fprintf('R nominal     = %.0f ohm\n', R_nom);
+fprintf('RA nominal    = %.0f ohm\n', RA_nom);
+fprintf('RB nominal    = %.0f ohm\n', RB_nom);
+fprintf('K ideal       = %.4f\n', K);
+fprintf('a ideal       = %.4f\n', a);
+fprintf('aK gain       = %.4f V/V\n', a*K);
 
 
 figure;
 plot(f_pwm, PWM_mag_dB, 'LineWidth', 1.2);
 hold on;
-plot(f_pwm, H_lp_dB, 'LineWidth', 1.8);
+plot(f_pwm, H_filter_dB, 'LineWidth', 1.8);
 grid on;
 
 xline(f0, ':', sprintf('Signal = %.1f Hz', f0));
@@ -235,9 +234,9 @@ xline(FS, ':', sprintf('f_{PWM} = %.0f Hz', FS));
 
 xlabel('Frequency [Hz]');
 ylabel('Normalized Magnitude [dB]');
-title('PWM FFT with 1 kHz Sallen-Key Low-Pass Filter Response Overlay');
+title('PWM FFT with 1 kHz Reconstruction Filter Response Overlay');
 
-legend('PWM FFT', 'Sallen-Key LP response');
+legend('PWM FFT', 'Reconstruction filter response');
 
-xlim([0 100000]);
+xlim([0 5000]);
 ylim([-100 10]);
