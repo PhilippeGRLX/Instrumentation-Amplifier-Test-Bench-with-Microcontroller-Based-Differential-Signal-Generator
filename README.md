@@ -217,9 +217,9 @@ $$
 #### Second-order Sallen-Key low-pass filter
 [!TIP]
 ToDo:
-- [ ] Verify passive component values.
-- [ ] Verify Sallen-Key transfer function and formulas.
-- [ ] Validate MATLAB results against measurements.
+- [ ] Verify cutoff frequency on Breadboard.
+- [ ] Verify 1kHz PWM signal.
+- [ ] Verify resulting reconstructed sine wave.
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_1kHz.png "Figure")
 
 The second-order Sallen-Key low-pass filter is used to provide stronger attenuation of the high-frequency PWM carrier while preserving the 1 kHz sinusoidal envelope.
