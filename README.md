@@ -108,7 +108,7 @@ After analog filtering, the low-frequency sinusoidal envelope is reconstructed w
 
 Figure 2 shows the spectrum of the sinusoidal lookup table (LUT), revealing the desired 60 Hz component together with a large DC component resulting from the positive-only PWM duty-cycle range.
 
-Figure 3 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component.
+Figure 3 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component. The PWM carrier however introduces undesireable frequency content that needs to be attenuated by the reconstruction filters.
 
 <p align="center">
   <img src="docs/images/signal_analysis/PWM60Hz_FFT_LUT.png" width="49%" />
