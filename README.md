@@ -5,20 +5,27 @@
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Hero_image.png "Figure")
 
 ## Introduction
+[!ToDo] Rework the intro.
 
 The aim of this repository is to help students, hobbyists and engineers build
-a practical understanding of instrumentation amplifiers, differential signal
-generation and common-mode rejection.
+a practical understanding of instrumentation amplifiers and common mode rejection rate (CMMR), one of their key characteristics.
+A diferrential signal generator is designed and build as a test bench for the instrumentation amplifier experimental validation.
+
 
 This project combines:
-- Microcontroller-based PWM signal generation,
-- Analog filtering techniques,
-- Differential and common-mode signal synthesis,
+- Microcontroller-based PWM signal generation (Arduino Uno),
+- First and second order active filters design for PWM-based sinusoidal signal synthesis,
+- Theoretical Frequency domain analysis with Matlab and Altium Design Spice simulations,
+- Experimental Frequency domain analysis of the signal synthesis and hardware.
 - Experimental instrumentation amplifier validation.
 
 The generated signals are specifically designed to bench-test a 3-op-amp
 instrumentation amplifier architecture under controlled differential and
 common-mode noise conditions representative of ambient electromagnetic interference.
+
+[!TIP]
+Why generate a signal, why a sinusoidal signal?
+The instumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity.
 
 Two sinusoidal envelopes (~60 Hz and ~1 kHz) are reconstructed from PWM
 carrier signals using analog filter stages. These signals are then combined
@@ -32,6 +39,7 @@ including:
 - Firmware generation,
 - Analog filtering,
 - Experimental validation.
+
 
 
 ## Table of Contents
