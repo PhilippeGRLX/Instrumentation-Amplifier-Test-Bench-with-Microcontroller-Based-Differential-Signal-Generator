@@ -15,8 +15,8 @@ A diferrential signal generator is designed and build as a test bench for the in
 This project combines:
 - Microcontroller-based PWM signal generation (Arduino Uno),
 - First and second order active filters design for PWM-based sinusoidal signal synthesis,
-- Theoretical Frequency domain analysis with Matlab and Altium Design Spice simulations,
-- Experimental Frequency domain analysis of the signal synthesis and hardware.
+- Theoretical Frequency domain analysis with Matlab and Altium Spice simulations,
+- Experimental Frequency domain analysis of the synthesised signals and hardware.
 - Experimental instrumentation amplifier validation.
 
 The generated signals are specifically designed to bench-test a 3-op-amp
