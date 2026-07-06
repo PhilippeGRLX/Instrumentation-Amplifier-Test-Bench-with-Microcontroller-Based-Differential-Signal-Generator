@@ -7,38 +7,34 @@
 ## Introduction
 [!ToDo] Rework the intro.
 
-The aim of this repository is to help students, hobbyists and engineers build
-a practical understanding of instrumentation amplifiers and common mode rejection rate (CMMR), one of their key characteristics.
-A diferrential signal generator is designed and build as a test bench for the instrumentation amplifier experimental validation.
+The aim of this repository is to help students, hobbyists and engineers build a practical understanding of
+instrumentation amplifiers (INA). By exploring their ability to reject common-mode interference while preserving differential signal integrity,
+the reader will develop an understanding of their key role in signal acquisition and conditioning.
+The repository also includes a diferrential signal generator designed as a test bench for the instrumentation amplifier.
+Its design process is well documented for any reader interested in PWM-based signal synthesis, active analog filtering and frequency-domain validation using oscilloscope measurements and MATLAB.
 
 
-This project combines:
-- Microcontroller-based PWM signal generation (Arduino Uno),
+Throughout this project, the reader will explore:
+- Microcontroller-based PWM signal synthesis (Arduino Uno),
 - First and second order active filters design for PWM-based sinusoidal signal synthesis,
 - Theoretical Frequency domain analysis with Matlab and Altium Spice simulations,
-- Experimental Frequency domain analysis of the synthesised signals and hardware.
+- Experimental Frequency domain analysis of the synthesised signals and hardware (oscilloscope),
 - Experimental instrumentation amplifier validation.
 
-The generated signals are specifically designed to bench-test a 3-op-amp
-instrumentation amplifier architecture under controlled differential and
-common-mode noise conditions representative of ambient electromagnetic interference.
 
-[!TIP]
-Why generate a signal, why a sinusoidal signal?
-The instumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity.
+Project workflow:
+1. Generate two PWM-modulated sinusoidal signals using an Arduino.
+2. Reconstruct the sinusoidal envelopes through active analog filters.
+3. Combine both signals into differential and common-mode components.
+4. Characterize the generated signals using oscilloscope measurements and MATLAB.
+5. Evaluate the instrumentation amplifier's ability to reject common-mode interference while preserving the differential signal.
 
-Two sinusoidal envelopes (~60 Hz and ~1 kHz) are reconstructed from PWM
-carrier signals using analog filter stages. These signals are then combined
-into differential and common-mode components in order to experimentally
-evaluate common-mode rejection rate (CMRR) and signal recovery performance.
+> [!NOTE]
+> **Why generate sinusoidal test signals?**
+>The instumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity. The 60 Hz common mode signal used in the test bench is meant to represent the noise induced by the ambient power grid which has a sinusoidal shape. As for the usefull signal, its sinusidal shape is chosen for simplicity, but also because the signal's quality is easy to asses visualy.
 
-The repository also documents the complete hardware implementation,
-including:
-- Breadboard prototyping,
-- PCB design,
-- Firmware generation,
-- Analog filtering,
-- Experimental validation.
+
+While the complete PCB files are provided to allow readers to reproduce the project, the primary objective of this repository is educational. Readers are encouraged to adapt, improve, and experiment with the design rather than simply replicate it.
 
 
 
