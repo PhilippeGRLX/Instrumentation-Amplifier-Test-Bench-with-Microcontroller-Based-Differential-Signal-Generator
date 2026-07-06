@@ -30,9 +30,8 @@ Project workflow:
 >The instumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity. The 60 Hz common mode signal used in the test bench is meant to represent the noise induced by the ambient power grid which has a sinusoidal shape. As for the usefull signal, its sinusidal shape is chosen for simplicity, but also because the signal's quality is easy to asses visualy.
 
 
-While the complete PCB files are provided to allow readers to reproduce the project, the primary objective of this repository is educational. Readers are encouraged to adapt, improve, and experiment with the design rather than simply replicate it.
-
-
+> [!Note]
+> While the complete PCB files are provided to allow readers to reproduce the project, the primary objective of this repository is educational. Readers are encouraged to adapt, improve, and experiment with the design rather than simply replicate it.
 
 ## Table of Contents
 
