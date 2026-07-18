@@ -319,8 +319,8 @@ The two filtered outputs are used as the building blocks for the test signal:
 - $V_{id}$ : 1 kHz sinusoidal differential-mode component
 
 <p align="center">
-  <img src="docs/images/oscilloscope/vicm_july_16_2026.png" width="49%" />
-  <img src="docs/images/oscilloscope/vid_july16_2026.png" width="49%" />
+  <img src="docs/images/oscilloscope/60HzChannel_july_16.png" width="49%" />
+  <img src="docs/images/oscilloscope/1kHzChannel_july_16.png" width="49%" />
 </p>
 
 The first 1 kHz reconstruction showed visible distortion most likely due to the limited
