@@ -293,8 +293,8 @@ For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much d
 > Investigate the spectral content between 200 Hz and 900 Hz. Determine whether it results from spectral leakage (window length / FFT coherence), PWM modulation, or measurement artifacts. Resume the analysis after measuring the filtered signal. Clean up text
 
 <p align="center">
-  <img src="docs/images/Oscilloscope/PWM_60Hz_July_4_2026.png" width="49%" />
-  <img src="docs/images/Oscilloscope/PWM_1kHzA_July_4.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_60Hz_July_4_2026.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHzA_July_4.png" width="49%" />
 </p>
 
 <p align="center">
@@ -302,8 +302,8 @@ For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much d
 </p>
 
 <p align="center">
-  <img src="docs/images/Oscilloscope/PWM_60Hz_matlab_FFT_July_4.png" width="49%" />
-  <img src="docs/images/Oscilloscope/PWM_1kHzA_matlab_FFT_July_4.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_60Hz_matlab_FFT_July_4.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHzA_matlab_FFT_July_4.png" width="49%" />
 </p>
 
 <p align="center">
@@ -319,8 +319,8 @@ The two filtered outputs are used as the building blocks for the test signal:
 - $V_{id}$ : 1 kHz sinusoidal differential-mode component
 
 <p align="center">
-  <img src="docs/images/Oscilloscope/vicm_july_16_2026.png?v=2" width="49%" />
-  <img src="docs/images/Oscilloscope/vid_july_16_2026.png?v=2" width="49%" />
+  <img src="docs/images/oscilloscope/vicm_july_16_2026.png?v=2" width="49%" />
+  <img src="docs/images/oscilloscope/vid_july_16_2026.png?v=2" width="49%" />
 </p>
 
 The first 1 kHz reconstruction showed visible distortion most likely due to the limited
