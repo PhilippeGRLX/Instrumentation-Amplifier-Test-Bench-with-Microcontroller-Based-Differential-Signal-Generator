@@ -6,7 +6,7 @@
 
 ## Introduction
 
-The aim of this repository is to help students, hobbyists and engineers build a practical understanding of instrumentation amplifiers (INA). By exploring their ability to reject common-mode interference while preserving differential signal integrity, the reader will develop an understanding of their key role in signal acquisition and conditioning. The repository also includes a diferrential signal generator designed as a test bench for the instrumentation amplifier. Its design process is well documented for any reader interested in PWM-based signal synthesis, active analog filtering and frequency-domain validation using oscilloscope measurements and MATLAB.
+The aim of this repository is to help students, hobbyists and engineers build a practical understanding of instrumentation amplifiers (INAs). By exploring their ability to reject common-mode interference while preserving differential signal integrity, the reader will develop an understanding of their key role in signal acquisition and conditioning. The repository also includes a diferrential signal generator designed as a test bench for the instrumentation amplifier. Its design process is well documented for any reader interested in PWM-based signal synthesis, active analog filtering and frequency-domain validation using oscilloscope measurements and MATLAB.
 
 
 Throughout this project, the reader will explore:
@@ -74,9 +74,24 @@ Project workflow:
 
 ### Generating sinusoidal signals from filtered PWM carriers
 
-The Arduino could generate a staircase approximation of a sinusoidal waveform directly from the LUT values. However, such an approach would retain the quantization steps within the signal bandwidth and provide limited reconstruction quality.
+The Arduino could generate a staircase approximation of a sinusoidal waveform directly from the lookup-table (LUT) values. However, the quantization and discrete-time updates inherent to a staircase waveform introduce additional spectral components. Since the objective is to characterize the INA, these imperfections would make it more difficult to distinguish distortion originating from the signal generator from distortion introduced by the instrumentation amplifier under test.
 
-Instead, a sinusoidal lookup table (LUT) is used to continuously adjust the duty cycle of a high-frequency PWM carrier. By shifting most of the unwanted spectral content around the PWM carrier frequency, analog reconstruction filters can effectively recover the low-frequency sinusoidal envelope.
+<p align="center">
+  <img src="docs/images/signal_analysis/staircase_waveform.png"
+       width="90%" />
+</p>
+
+<p align="center">
+  <em>
+    Figure 1. Staircase approximation of the 60 Hz sinusoidal signal
+    generated from the lookup-table values and its normalized frequency
+    spectrum (right). In addition to the desired fundamental component, the
+    discrete update process produces high-frequency spectral images around
+    the LUT update frequency.
+  </em>
+</p>
+
+Instead, the sinusoidal lookup table is used to continuously adjust the duty cycle of a high-frequency PWM carrier. By shifting most of the unwanted spectral content around the PWM carrier frequency, analog reconstruction filters can effectively recover the low-frequency sinusoidal envelope.
 
 The analog reconstruction filters are designed to:
 - remove the DC component introduced by the PWM duty-cycle offset,

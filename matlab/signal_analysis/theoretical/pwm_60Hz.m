@@ -7,7 +7,7 @@ script_dir = fileparts(mfilename('fullpath'));
 %disp(script_dir)
 
     % Find file relative to current matlab file directory 
-filename = fullfile(script_dir, '..', '..', ...
+filename = fullfile(script_dir, '..', '..', '..', ...
     'firmware', 'pwm_signal_generator', ...
     'lookup_tables', 'f60Hz.h');
 
@@ -34,22 +34,98 @@ LUT = LUT(:).';   % force row vector
 N = length(LUT);
 f0 = FS/N;
 
-%% Figure 1 - Sinusoidal envelope (LUT)
+%% Figure 1 - Staircase sinusoid and its frequency spectrum
 
 signal = LUT;
+t = (0:length(signal)-1) / FS;
 
-t = (0:length(signal)-1)/FS;
+% Number of simulation points used to represent each staircase step
+samples_per_step = 100;
+
+% Zero-order-hold reconstruction of the LUT
+signal_staircase = repelem(signal, samples_per_step);
+
+% Effective sampling frequency of the reconstructed signal
+FS_staircase = FS * samples_per_step;
+
+% Time vector for staircase signal
+t_staircase = (0:length(signal_staircase)-1) / FS_staircase;
+
+% Remove DC before FFT
+
+signal_ac = signal_staircase - mean(signal_staircase);
+
+% Repeat several periods to improve frequency resolution
+
+number_of_periods = 20;
+signal_fft_input = repmat(signal_ac, 1, number_of_periods);
+
+% FFT
+
+Nfft = length(signal_fft_input);
+
+X = fft(signal_fft_input);
+
+% Single-sided spectrum
+X_mag = abs(X(1:floor(Nfft/2)+1));
+
+% Normalize relative to the fundamental
+X_mag = X_mag / max(X_mag);
+
+X_mag_dB = 20*log10(X_mag + eps);
+
+f = (0:floor(Nfft/2)) * FS_staircase / Nfft;
+
+% Combined figure
 
 figure;
-stairs(t*1000, signal, 'LineWidth', 1.2);
+
+tiledlayout(1, 2, 'TileSpacing', 'compact', ...
+                  'Padding', 'compact');
+
+% Left plot - Staircase waveform
+
+nexttile;
+
+stairs(t_staircase * 1000, signal_staircase, ...
+       'LineWidth', 1.2);
+
 grid on;
 
 xlabel('Time [ms]');
-ylabel('Look Up Table Value (0-1023)');
-title(sprintf('Sinusoidal Envelope - LUT 60 Hz - %.3f Hz, N = %d, FS = %d Hz', f0, N, FS));
+ylabel('LUT value [0–1023]');
 
-xlim([0 1/f0]*1000);
+title(sprintf(['Staircase approximation of a sinusoid\n' ...
+               'f_0 = %.3f Hz, N = %d'], ...
+               f0, N));
+
+xlim([0 1/f0] * 1000);
 ylim([0 1023]);
+
+% Right plot - FFT
+
+nexttile;
+
+plot(f, X_mag_dB, 'LineWidth', 1.2);
+grid on;
+
+xlabel('Frequency [Hz]');
+ylabel('Normalized magnitude [dB]');
+
+title('Spectrum of the staircase waveform');
+
+xlim([0 5*FS]);
+ylim([-100 5]);
+
+% Fundamental frequency
+xline(f0, '--', sprintf('f_0 = %.1f Hz', f0));
+
+% LUT update frequency and first images
+xline(FS, ':', sprintf('F_S = %.0f Hz', FS));
+xline(FS - f0, ':');
+xline(FS + f0, ':');
+xline(2*FS - f0, ':');
+xline(2*FS + f0, ':');
 
 %% Figure 2 - PWM carrier modulated by LUT
 
