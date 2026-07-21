@@ -99,7 +99,7 @@ title(sprintf(['Staircase approximation of a sinusoid\n' ...
                'f_0 = %.3f Hz, N = %d'], ...
                f0, N));
 
-xlim([0 1/f0] * 1000);
+xlim([0 1/f0] * 1000/2);
 ylim([0 1023]);
 
 % Right plot - FFT
