@@ -314,7 +314,7 @@ For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much d
 
 <p align="center">
   <img src="docs/images/oscilloscope/PWM_60Hz_matlab_FFT_july_21.png" width="49%" />
-  <img src="docs/images/oscilloscope/PWM_1kHzA_matlab_FFT_july_21.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHz_matlab_FFT_july_21.png" width="49%" />
 </p>
 
 <p align="center">
