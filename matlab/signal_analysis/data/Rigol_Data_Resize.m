@@ -5,7 +5,7 @@ clear; clc;
 input_file  = 'PWM1kHz_unfiltered_full.csv';
 output_file = 'PWM1kHz_unfiltered.csv';
 
-N_points = 500000;     % Number of waveform samples to keep
+N_points = 500000*100;     % Number of waveform samples to keep
 
 %% Open files
 

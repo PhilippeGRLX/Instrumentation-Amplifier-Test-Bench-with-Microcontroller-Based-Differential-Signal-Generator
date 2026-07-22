@@ -44,9 +44,9 @@ Project workflow:
     - [First-Order Active Low-Pass Filter](#first-order-active-low-pass-filter)
     - [Second-Order Sallen-Key Low-Pass Filter](#second-order-sallen-key-low-pass-filter)
 
-- [Differential Signal Generator](#differential-signal-generator)
+  - [Differential Signal Generator](#differential-signal-generator)
 
-- [Instrumentation Amplifier](#instrumentation-amplifier)
+  - [Instrumentation Amplifier](#instrumentation-amplifier)
 
 - [CMRR and Measured Performance](#cmrr-and-measured-performance)
 
@@ -229,11 +229,6 @@ $$
 
 
 #### Second-order Sallen-Key low-pass filter
-[!TIP]
-ToDo:
-- [ ] Verify cutoff frequency on Breadboard.
-- [ ] Verify 1kHz PWM signal.
-- [ ] Verify resulting reconstructed sine wave.
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/LP_1kHz.png "Figure")
 
 The second-order Sallen-Key low-pass filter is used to provide stronger attenuation of the high-frequency PWM carrier while preserving the 1 kHz sinusoidal envelope.
@@ -295,17 +290,18 @@ CMRR_{dB}=20\log_{10}\left(\frac{A_d}{A_{cm}}\right)
 $$
 ## CMRR and Measured Performance
 
+
 ## Testing the Signal
 ### Experimental PWM Signal Validation
 
-The PWM carrier signals were experimentally characterized using a Rigol DS1054Z oscilloscope. The acquired waveforms were exported as CSV files and processed in MATLAB to obtain their frequency spectra.
+The PWM carrier signals were experimentally characterized using a Rigol DS1054Z oscilloscope. The acquired waveforms were exported as CSV files and processed in MATLAB to obtain their frequency spectra (Matlab figures are more fun to look at than oscilloscope screenshots).
 
 For the **60 Hz** signal path, the PWM waveform clearly shows the low-frequency sinusoidal envelope modulating the high-frequency PWM carrier. The measured FFT confirms the presence of the desired 60 Hz component together with the PWM carrier, validating both the firmware implementation and the theoretical frequency-domain analysis.
 
-For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much denser carrier, resulting in a waveform whose envelope already resembles a sinusoid before analog filtering. The corresponding FFT confirms the presence of the desired fundamental component at 976.6 Hz together with ambient 60 Hz interference and the harmonic content introduced by PWM modulation.
+For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much denser carrier. The corresponding FFT confirms the presence of the desired fundamental component at 976.6 Hz together with the harmonic content introduced by PWM modulation.
 
 > [!TODO]
-> Investigate the spectral content between 200 Hz and 900 Hz. Determine whether it results from spectral leakage (window length / FFT coherence), PWM modulation, or measurement artifacts. Resume the analysis after measuring the filtered signal. Clean up text
+> Reformulate and fix figures
 
 <p align="center">
   <img src="docs/images/oscilloscope/PWM_60Hz_July_4_2026.png" width="49%" />
@@ -317,8 +313,8 @@ For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much d
 </p>
 
 <p align="center">
-  <img src="docs/images/oscilloscope/PWM_60Hz_matlab_FFT_July_4.png" width="49%" />
-  <img src="docs/images/oscilloscope/PWM_1kHzA_matlab_FFT_July_4.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_60Hz_matlab_FFT_july_21.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHzA_matlab_FFT_july_21.png" width="49%" />
 </p>
 
 <p align="center">
@@ -344,7 +340,7 @@ of higher-order harmonics. Further tuning of the Sallen-Key cutoff frequency
 and/or the lookup-table update rate is required.
 
 ### Viewing differential signals with common mode
-### Viewing common-mode attenuationSS
+### Viewing common-mode attenuation
 
 ## Hardware Implementation
 ### Breadboard Prototype
