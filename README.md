@@ -265,31 +265,47 @@ $$
 
 ### Differential signal generator
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
+> [!TIP]
+> **Contributions welcome**
+>
+> This section is still under development.
+>
+> If you know of good references (books, application notes, university lectures, or papers) covering differential signal generation, common-mode signal injection, feel free to suggest them by opening an issue or submitting a pull request.
 
 ### Instrumentation Amplifier
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier_sch.png "Figure")
 
-The instrumentation amplifier is implemented using the classic 3-op-amp topology. 
-The first stage provides high input impedance and differential gain, while the second
- stage subtracts the two amplified signals and rejects the common-mode component.
+The instrumentation amplifier (INA) is the device under test in this project. Its role is to amplify the differential component of the input signal (1kHz) while rejecting the common-mode interference (60Hz) intentionally injected by the differential signal generator. This makes the test bench suitable for experimentally demonstrating the Common-Mode Rejection Ratio (CMRR), one of the key performance metrics of instrumentation amplifiers.
 
-Differential gain:
+The circuit is implemented using the classical three-op-amp topology. The first stage provides high input impedance together with programmable differential gain, while the second stage subtracts the two amplified input signals and rejects the common-mode component.
 
-$$
-A_d = \frac{R_2}{R_1} (1+\frac{R_3}{R_4/2})
-$$
-
-Common-mode rejection ratio:
+#### Differential gain
 
 $$
-CMRR = \frac{A_d}{A_{cm}}
+A_d = \frac{R_2}{R_1}\left(1+\frac{R_3}{R_4/2}\right)
 $$
+
+#### Common-mode rejection ratio
+
+$$
+CMRR=\frac{A_d}{A_{cm}}
+$$
+
+or, in decibels,
 
 $$
 CMRR_{dB}=20\log_{10}\left(\frac{A_d}{A_{cm}}\right)
 $$
-## CMRR and Measured Performance
 
+**Recommended reference**
+
+Sedra, A. S., Smith, K. C., *Microelectronic Circuits*, 7th Edition,
+Section 2.4.2 – *A Superior Circuit: The Instrumentation Amplifier*, p. 82.
+
+
+## CMRR and Measured Performance
+> [!TODO]
+> Basic protocol, Vin and Vout figures for V_{cm} an V_{dif}, result table, performance calculation
 
 ## Testing the Signal
 ### Experimental PWM Signal Validation
@@ -298,14 +314,14 @@ The PWM carrier signals were experimentally characterized using a Rigol DS1054Z 
 
 For the **60 Hz** signal path, the PWM waveform clearly shows the low-frequency sinusoidal envelope modulating the high-frequency PWM carrier. The measured FFT confirms the presence of the desired 60 Hz component together with the PWM carrier, validating both the firmware implementation and the theoretical frequency-domain analysis.
 
-For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much denser carrier. The corresponding FFT confirms the presence of the desired fundamental component at 976.6 Hz together with the harmonic content introduced by PWM modulation.
+For the **1 kHz** signal path, the corresponding FFT confirms the presence of the desired fundamental component at 976.6 Hz together with the harmonic content introduced by PWM modulation.
 
 > [!TODO]
-> Reformulate and fix figures
+> Reformulate
 
 <p align="center">
-  <img src="docs/images/oscilloscope/PWM_60Hz_July_4_2026.png" width="49%" />
-  <img src="docs/images/oscilloscope/PWM_1kHzA_July_4.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_60Hz_july_22.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHz_july_22.png" width="49%" />
 </p>
 
 <p align="center">
@@ -314,7 +330,7 @@ For the **1 kHz** signal path, the higher Timer2 PWM frequency produces a much d
 
 <p align="center">
   <img src="docs/images/oscilloscope/PWM_60Hz_matlab_FFT_july_21.png" width="49%" />
-  <img src="docs/images/oscilloscope/PWM_1kHz_matlab_FFT_july_21.png" width="49%" />
+  <img src="docs/images/oscilloscope/PWM_1kHz_matlab_FFT_july_22.png" width="49%" />
 </p>
 
 <p align="center">
@@ -334,24 +350,33 @@ The two filtered outputs are used as the building blocks for the test signal:
   <img src="docs/images/oscilloscope/1kHzChannel_july_16.png" width="49%" />
 </p>
 
-The first 1 kHz reconstruction showed visible distortion most likely due to the limited
-number of PWM duty-cycle samples per sine period and insufficient attenuation
-of higher-order harmonics. Further tuning of the Sallen-Key cutoff frequency
-and/or the lookup-table update rate is required.
+The initial 1 kHz reconstruction exhibited visible distortion, most likely due to the limited number of PWM duty-cycle updates per sinusoidal period and insufficient attenuation of higher-order harmonics. The issue was resolved by configuring Timer2 for 8-bit Fast PWM operation, which increased the PWM carrier frequency and improved the separation between the desired signal and the carrier, making analog reconstruction significantly more effective.
 
 ### Viewing differential signals with common mode
+> [!TODO]
+> ScopeShot needed
 ### Viewing common-mode attenuation
+> [!TODO]
+> ScopeShot needed of differential signal with common mode... and Vout after the INA.
 
 ## Hardware Implementation
 ### Breadboard Prototype
+> [!TODO]
+> Photoshoot!
 ### PCB Design
-#### Signal Generator
+> [!TODO]
+> Order, build, test and Photoshoot!
+#### Signal Generator PCB
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Common_Mode_Differential_Signal_Generator.png "Figure")
-#### Instrumentation Amplifier
+#### Instrumentation Amplifier PCB
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier.png "Figure")
 #### Performance
+> [!TODO]
+> Clean Table with Instrumentation Amplifier performance Acm, Ad, CMMR, 
 
 ## Compatibility
+> [!TODO]
+> +/- 5V source, ?
 ## Safety
 
 ## Resources

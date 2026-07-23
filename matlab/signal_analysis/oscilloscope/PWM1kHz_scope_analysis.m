@@ -88,7 +88,7 @@ xline(60,'--','Ambient 60 Hz');
 xline(f0,':',sprintf('Signal = %.1f Hz',f0));
 xline(fPWM,':',sprintf('f_{PWM} = %.0f Hz',fPWM));
 
-xlim([0 10000]);
+xlim([0 10000*10]);
 ylim([-100 5]);
 
 fprintf('\n----- Oscilloscope acquisition -----\n');
