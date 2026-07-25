@@ -43,30 +43,27 @@ Project workflow:
     - [First-Order Active High-Pass Filter](#first-order-active-high-pass-filter)
     - [First-Order Active Low-Pass Filter](#first-order-active-low-pass-filter)
     - [Second-Order Sallen-Key Low-Pass Filter](#second-order-sallen-key-low-pass-filter)
-
   - [Differential Signal Generator](#differential-signal-generator)
-
   - [Instrumentation Amplifier](#instrumentation-amplifier)
 
 - [CMRR and Measured Performance](#cmrr-and-measured-performance)
 
 - [Testing the Signal](#testing-the-signal)
-  - [Viewing PWM Carrier Signals](#viewing-pwm-carrier-signals)
+  - [Experimental PWM Signal Validation](#experimental-pwm-signal-validation)
   - [Viewing Filtered Sinusoidal Signals](#viewing-filtered-sinusoidal-signals)
-  - [Viewing Noisy Differential Signals](#viewing-noisy-differential-signals)
+  - [Viewing Differential Signals with Common Mode](#viewing-differential-signals-with-common-mode)
   - [Viewing Common-Mode Attenuation](#viewing-common-mode-attenuation)
 
 - [Hardware Implementation](#hardware-implementation)
   - [Breadboard Prototype](#breadboard-prototype)
   - [PCB Design](#pcb-design)
-    - [Signal Generator](#signal-generator)
-    - [Instrumentation Amplifier](#instrumentation-amplifier-1)
+    - [Signal Generator PCB](#signal-generator-pcb)
+    - [Instrumentation Amplifier PCB](#instrumentation-amplifier-pcb)
     - [Performance](#performance)
 
 - [Compatibility](#compatibility)
-
 - [Safety](#safety)
-
+- [Resources](#resources)
 - [Acknowledgements](#acknowledgements)
 
 
