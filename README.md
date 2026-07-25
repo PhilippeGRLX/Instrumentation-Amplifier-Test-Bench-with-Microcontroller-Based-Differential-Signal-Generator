@@ -353,8 +353,25 @@ The two filtered outputs are used as the building blocks for the test signal:
 The initial 1 kHz reconstruction exhibited visible distortion, most likely due to the limited number of PWM duty-cycle updates per sinusoidal period and insufficient attenuation of higher-order harmonics. The issue was resolved by configuring Timer2 for 8-bit Fast PWM operation, which increased the PWM carrier frequency and improved the separation between the desired signal and the carrier, making analog reconstruction significantly more effective.
 
 ### Viewing differential signals with common mode
-> [!TODO]
-> ScopeShot needed
+
+The reconstructed 60 Hz common-mode component and the 1 kHz differential component are combined to generate the pair of input signals applied to the instrumentation amplifier, \(V_{id+}\) and \(V_{id-}\).
+
+<p align="center">
+  <img src="docs/images/oscilloscope/Generated_signal_july_25.png" width="49%" />
+  <img src="docs/images/oscilloscope/Generated_signal_zoom_july_25.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>
+    Figure 11. Measured outputs of the differential signal generator. Both
+    outputs share the same 60 Hz common-mode component, while the 1 kHz
+    differential component is applied with a 180° phase shift between
+    \(V_{id+}\) and \(V_{id-}\). The full acquisition is shown on the left,
+    while the zoomed view on the right highlights the differential voltage
+    between the two outputs.
+  </em>
+</p>
+
 ### Viewing common-mode attenuation
 > [!TODO]
 > ScopeShot needed of differential signal with common mode... and Vout after the INA.
