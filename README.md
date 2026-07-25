@@ -316,9 +316,6 @@ For the **60 Hz** signal path, the PWM waveform clearly shows the low-frequency 
 
 For the **1 kHz** signal path, the corresponding FFT confirms the presence of the desired fundamental component at 976.6 Hz together with the harmonic content introduced by PWM modulation.
 
-> [!TODO]
-> Reformulate
-
 <p align="center">
   <img src="docs/images/oscilloscope/PWM_60Hz_july_22.png" width="49%" />
   <img src="docs/images/oscilloscope/PWM_1kHz_july_22.png" width="49%" />
@@ -374,27 +371,73 @@ The reconstructed 60 Hz common-mode component and the 1 kHz differential compone
 
 ### Viewing common-mode attenuation
 > [!TODO]
-> ScopeShot needed of differential signal with common mode... and Vout after the INA.
+> ScopeShot needed of differential signal with common mode... and Vout after the INA. To test on PCB!
 
 ## Hardware Implementation
 ### Breadboard Prototype
-> [!TODO]
-> Photoshoot!
+
+The complete signal generator was first assembled and validated on a solderless breadboard before the PCB was designed. This prototype allowed the analog filters and differential signal generation to be experimentally verified while providing a convenient platform for debugging and iterative improvements.
+
+The breadboard implementation also facilitated oscilloscope measurements used throughout this repository to validate the theoretical analysis and guide the final hardware design.
+
+<p align="center">
+  <img src="docs/images/BreadBoard_july_25.png" width="80%" />
+</p>
+
+<p align="center">
+  <em>
+    Figure 12. Breadboard implementation of the differential signal generator
+    used to validate the PWM reconstruction filters and the generated
+    differential and common-mode signals prior to PCB fabrication.
+  </em>
+</p>
+
 ### PCB Design
 > [!TODO]
 > Order, build, test and Photoshoot!
+
 #### Signal Generator PCB
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Common_Mode_Differential_Signal_Generator.png "Figure")
 #### Instrumentation Amplifier PCB
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier.png "Figure")
+
 #### Performance
 > [!TODO]
-> Clean Table with Instrumentation Amplifier performance Acm, Ad, CMMR, 
+> Clean Table with Instrumentation Amplifier performance Acm, Ad, CMMR. To do with PCB!
 
 ## Compatibility
-> [!TODO]
-> +/- 5V source, ?
+### Software
+
+| Software | Version |
+|----------|---------|
+| Altium Designer | 26.5.1 (or later) |
+| MATLAB | R2025b (or later) |
+| Arduino IDE | 2.3.10 |
+| Git | Any recent version |
+
+### Hardware
+
+| Item | Notes |
+|------|------|
+| Arduino Uno | ATmega328P, 16 MHz |
+| Dual power supply | ±5 V |
+| Oscilloscope | Any ≥20 MHz bandwidth |
+
 ## Safety
+
+This project is intended for educational and laboratory use.
+
+The signal generator and instrumentation amplifier operate from a **±5 V dual power supply**, making the circuit relatively safe to handle. Nevertheless, good laboratory practices should always be followed.
+
+- Verify all wiring before powering the circuit.
+- Double-check the polarity of the dual supply rails.
+- Never exceed the absolute maximum ratings of the integrated circuits.
+- Ensure that all instruments share a common reference when making oscilloscope measurements.
+- Disconnect power before modifying the circuit or replacing components.
+
+This repository does not involve mains voltages. The 60 Hz common-mode signal is **synthetically generated** and is **not** connected to the electrical power grid.
+
+The authors assume no responsibility for damage to equipment or personal injury resulting from the misuse or modification of this design.
 
 ## Resources
 
