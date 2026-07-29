@@ -441,6 +441,7 @@ The authors assume no responsibility for damage to equipment or personal injury 
 Related instrumentation amplifier projects:
 
 - [Laboratory Instrumentation Amplifier with 16-bit 1 MSPS ADC](https://github.com/drmcnelson/Laboratory-Instrumentation-Amplifier-with-16bit-1MSPS-ADC)
+- [Design and Implementation of Instrumentation amplifier](https://github.com/GanderlaChaithanya/Design_and_Implementation_of_Instrumentation_amplifier)
 
 ## Acknowledgements
 
