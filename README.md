@@ -6,8 +6,15 @@
 
 ## Introduction
 
-The aim of this repository is to help students, hobbyists and engineers build a practical understanding of instrumentation amplifiers (INAs). By exploring their ability to reject common-mode interference while preserving differential signal integrity, the reader will develop an understanding of their key role in signal acquisition and conditioning. The repository also includes a diferrential signal generator designed as a test bench for the instrumentation amplifier. Its design process is well documented for any reader interested in PWM-based signal synthesis, active analog filtering and frequency-domain validation using oscilloscope measurements and MATLAB.
+The aim of this repository is to help students, hobbyists and engineers build a practical understanding of instrumentation amplifiers (INAs). By exploring their ability to reject common-mode interference while preserving differential signal integrity, the reader will develop an understanding of their key role in signal acquisition and conditioning. The repository also includes a diferrential signal generator designed as a test bench for the instrumentation amplifier. Its design process is well documented for any reader interested in PWM-based signal synthesis, active analog filtering and frequency-domain analysis using oscilloscope measurements and MATLAB.
 
+<p align="center">
+<em>
+This project is built around the idea that a design is only as valuable as the engineer's ability to validate it experimentally.
+</em>
+<br>
+<sub>Inspired by a discussion with Petr Dvořák on <em>The Amp Hour</em> #669.</sub>
+</p>
 
 Throughout this project, the reader will explore:
 - Microcontroller-based PWM signal synthesis (Arduino Uno),
@@ -24,9 +31,8 @@ Project workflow:
 4. Characterize the generated signals using oscilloscope measurements and MATLAB.
 5. Evaluate the instrumentation amplifier's ability to reject common-mode interference while preserving the differential signal.
 
-> [!TIP]
+> [!IMPORTANT]
 > **Why generate sinusoidal test signals?**
-
 >The instrumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity. The 60 Hz common mode signal used in the test bench is meant to represent the noise induced by the ambient power grid which has a sinusoidal shape. As for the usefull signal, its sinusidal shape is chosen for simplicity, but also because the signal's quality is easy to asses visualy.
 
 
