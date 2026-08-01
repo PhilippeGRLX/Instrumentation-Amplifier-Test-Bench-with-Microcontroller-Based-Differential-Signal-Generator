@@ -12,7 +12,7 @@ The aim of this repository is to help students, hobbyists and engineers build a 
 Throughout this project, the reader will explore:
 - Microcontroller-based PWM signal synthesis (Arduino Uno),
 - First and second order active filters design for PWM-based sinusoidal signal synthesis,
-- Theoretical Frequency domain analysis with Matlab and Altium Spice simulations,
+- Theoretical Frequency domain analysis with Matlab simulations,
 - Experimental Frequency domain analysis of the synthesised signals and hardware (oscilloscope),
 - Experimental instrumentation amplifier validation.
 
@@ -27,7 +27,7 @@ Project workflow:
 > [!TIP]
 > **Why generate sinusoidal test signals?**
 
->The instumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity. The 60 Hz common mode signal used in the test bench is meant to represent the noise induced by the ambient power grid which has a sinusoidal shape. As for the usefull signal, its sinusidal shape is chosen for simplicity, but also because the signal's quality is easy to asses visualy.
+>The instrumentation amplifier can be though of as a building block of a signal acquisition circuit. Wires and PCB tracks are susceptible to ambient electromagnetic noise wich deteriorates the useful signal's integrity. The 60 Hz common mode signal used in the test bench is meant to represent the noise induced by the ambient power grid which has a sinusoidal shape. As for the usefull signal, its sinusidal shape is chosen for simplicity, but also because the signal's quality is easy to asses visualy.
 
 
 > [!Note]
@@ -119,7 +119,7 @@ After analog filtering, the low-frequency sinusoidal envelope is reconstructed w
 
 Figure 3 shows the spectrum of the sinusoidal lookup table (LUT), revealing the desired 60 Hz component together with a large DC component resulting from the positive-only PWM duty-cycle range.
 
-Figure 4 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component. The PWM carrier, however, also generates high-frequency spectral components around the carrier frequency (see Figure 5). These components are removed by the analog reconstruction filters, leaving only the desired low-frequency sinusoidal envelope.
+Figure 4 shows the spectrum of the corresponding PWM signal. After modulation, the desired 60 Hz component remains dominant, while harmonics introduced by the PWM process remain more than 40 dB below the fundamental component. The PWM carrier, however, also generates high-frequency spectral components around the carrier frequency (see Figure 5). These components are what has to be removed by the analog reconstruction filters, leaving only the desired low-frequency sinusoidal envelope.
 
 <p align="center">
   <img src="docs/images/signal_analysis/PWM60Hz_FFT_LUT.png" width="49%" />
@@ -160,6 +160,9 @@ This frequency-domain analysis provides valuable insight into the signal reconst
 #### 1 kHz signal path
 
 The 1 kHz signal follows the same PWM reconstruction principle as the 60 Hz path. However, generating a 1 kHz sinusoid with the same timer configuration would provide too few duty-cycle updates per period, resulting in visible waveform distortion.
+
+> [!TODO]
+> Basic equation for Timer, PWM frequency... justify filter order, stopband needed...
 
 To increase the temporal resolution, the 1 kHz signal is generated using **Timer2** configured for **8-bit Fast PWM** at **62.5 kHz**. Although this reduces the PWM amplitude resolution from 10 bits to 8 bits, the fourfold increase in carrier frequency provides 64 PWM updates per sinusoidal period instead of only 16. This significantly improves the reconstructed waveform while keeping the analog filtering requirements manageable.
 
@@ -259,7 +262,6 @@ $$
 |---|---|
 | 1 kHz path | 2 kHz |
 
-
 ### Differential signal generator
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Differential_signal_Generator.png "Figure")
 > [!TIP]
@@ -269,12 +271,18 @@ $$
 >
 > If you know of good references (books, application notes, university lectures, or papers) covering differential signal generation, common-mode signal injection, feel free to suggest them by opening an issue or submitting a pull request.
 
+> [!TODO]
+> Gain for common mode and differential mode experimental validation. PCB
+
 ### Instrumentation Amplifier
 ![Figure what](https://github.com/PhilippeGRLX/instrumentation-amplifier/blob/main/docs/images/Instrumentation_Amplifier_sch.png "Figure")
 
 The instrumentation amplifier (INA) is the device under test in this project. Its role is to amplify the differential component of the input signal (1kHz) while rejecting the common-mode interference (60Hz) intentionally injected by the differential signal generator. This makes the test bench suitable for experimentally demonstrating the Common-Mode Rejection Ratio (CMRR), one of the key performance metrics of instrumentation amplifiers.
 
 The circuit is implemented using the classical three-op-amp topology. The first stage provides high input impedance together with programmable differential gain, while the second stage subtracts the two amplified input signals and rejects the common-mode component.
+
+> [!TODO]
+> Enrich, stages and roles, effects on common mode and differential mode for each stage.
 
 #### Differential gain
 
@@ -333,6 +341,9 @@ For the **1 kHz** signal path, the corresponding FFT confirms the presence of th
 
 These measurements validate the PWM generation firmware, the oscilloscope acquisition procedure, and the MATLAB analysis tools before evaluating the analog reconstruction filters.
 
+> [!TODO]
+> Refine script for 1kHz FFT, better resolution possible?
+
 ### Viewing filtered sinusoidal signals
 
 The two filtered outputs are used as the building blocks for the test signal:
@@ -346,9 +357,12 @@ The two filtered outputs are used as the building blocks for the test signal:
 
 The initial 1 kHz reconstruction exhibited visible distortion, most likely due to the limited number of PWM duty-cycle updates per sinusoidal period and insufficient attenuation of higher-order harmonics. The issue was resolved by configuring Timer2 for 8-bit Fast PWM operation, which increased the PWM carrier frequency and improved the separation between the desired signal and the carrier, making analog reconstruction significantly more effective.
 
+[!NOTE]
+After seeing so many distorted waveforms, seeing a clean 1 kHz sine wave on my oscilloscope for the first time definitely put a smile on my face.
+
 ### Viewing differential signals with common mode
 
-The reconstructed 60 Hz common-mode component and the 1 kHz differential component are combined to generate the pair of input signals applied to the instrumentation amplifier, \(V_{id+}\) and \(V_{id-}\).
+The reconstructed 60 Hz common-mode component and the 1 kHz differential component are combined to generate the pair of input signals applied to the instrumentation amplifier, V<sub>id+</sub> and V<sub>id−</sub>.
 
 <p align="center">
   <img src="docs/images/oscilloscope/Generated_signal_july_25.png" width="49%" />
@@ -360,7 +374,7 @@ The reconstructed 60 Hz common-mode component and the 1 kHz differential compone
     Figure 11. Measured outputs of the differential signal generator. Both
     outputs share the same 60 Hz common-mode component, while the 1 kHz
     differential component is applied with a 180° phase shift between
-    \(V_{id+}\) and \(V_{id-}\). The full acquisition is shown on the left,
+    V<sub>id+</sub> and V<sub>id−</sub>. The full acquisition is shown on the left,
     while the zoomed view on the right highlights the differential voltage
     between the two outputs.
   </em>
